@@ -8,7 +8,9 @@
             <div class="col-4">
                 <h2>Рассылки</h2>
                 {% if user.is_authenticated %}
+                {% if mailing.owner_id == request.user.id%}
                     <a class="btn btn-success mt-3" href="{% url 'mailing:mailing_create' %}">Создать рассылку &raquo;</a></p>
+                {% endif %}
                 {% endif %}
             </div>
             <div class="col-4"></div>
@@ -59,11 +61,15 @@
                     <td>
                         <a class="btn btn-primary btn-sm" href="{% url 'mailing:mailing_detail' object.pk%}">Посмотреть </a>
                         {% if user.is_authenticated %}
+                        {% if mailing.owner_id == request.user.id%}
                         <a class="btn btn-primary btn-sm" href="{% url 'mailing:mailing_update' object.pk%}">Редактировать</a>
                         <a class="btn btn-danger btn-sm" href="{% url 'mailing:mailing_delete' object.pk%}">Удалить</a>
                         {% endif %}
+                        {% endif %}
                         {% if user.is_superuser %}
+                        {% if mailing.owner_id == request.user.id%}
                         <a class="btn btn-secondary btn-sm" href="{% url 'mailing:run_mail' object.pk%}">Запустить &raquo;</a>
+                        {% endif %}
                         {% endif %}
                     </td>
 

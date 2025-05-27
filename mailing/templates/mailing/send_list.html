@@ -25,9 +25,11 @@
         </div>
         <div class="row mb-2">
         {% if user.is_authenticated%}
+             {% if product.owner_id == request.user.id}
         <div class="col-md-12">
           <a class="btn btn-dark" href="{% url 'message:sms_detail' object.pk %}" role="button">Посмотреть</a>
           <a class="btn btn-dark" href="{% url 'message:sms_update' object.pk %}" role="button">Редактировать</a>
+          {% endif %}
           {% endif %}
           {% if perms.message.delete_sms or sms.owner == object.user.email %}
             <a class="btn btn-dark" href="{% url 'message:sms_delete' object.pk %}" role="button">Удалить</a>
