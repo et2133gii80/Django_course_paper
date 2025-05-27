@@ -10,6 +10,7 @@
             <div class="col-4">
                 <h2>Получатели</h2>
                 {% if user.is_authenticated %}
+
                 <a class="btn btn-success mt-3" href="{% url 'mailing:receivemail_form' %}">Добавить получателя
                     &raquo;</a></p>
                 {% endif %}

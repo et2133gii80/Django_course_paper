@@ -28,19 +28,20 @@ def run_mail(request, pk):
             )
             AttemptMailing.objects.create(
                 date_attempt=timezone.now(),
-                status=AttemptMailing.STATUS_OK,
-                server_response="Email отправлен",
+                status="OK",
+                response="Email отправлен",
                 mailing=mailing,
             )
         except Exception as e:
-            print(f"Ошибка при отправке письма для {recipient.email}: {str(e)}")
+            print(f"Ошибка при отправке письма для {recipient.mail}: {str(e)}")
             AttemptMailing.objects.create(
                 date_attempt=timezone.now(),
-                status=AttemptMailing.STATUS_NOK,
-                server_response=str(e),
+                status="ERROR",
+                response=str(e),
                 mailing=mailing,
             )
     if mailing.end_sending and mailing.end_sending <= timezone.now():
+
 
         mailing.status = Mailing.COMPLETED
     mailing.save()
@@ -62,7 +63,7 @@ def get_mailing_from_cache():
 
 
 def get_attempt_from_cache():
-    """Получение данных по попыткам  из кэша, если кэш пуст берем из БД."""
+    """Получение данных по попыткам из кэша, если кэш пуст берем из БД."""
 
     if not CACHE_ENABLED:
         return AttemptMailing.objects.all()
